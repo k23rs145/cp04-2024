@@ -37,7 +37,10 @@
         left:10px; right:10px;
         box-shadow: 5px 5px 5px;
         width: 50%;
-        margin: 0auto;
+        margin: 0 auto;
+    }
+    #time::after{
+        content: "秒";
     }
     
     #mycanvas {
