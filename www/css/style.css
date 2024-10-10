@@ -44,26 +44,24 @@
         left:10px; right:10px;
     }
     
-    #btnA {
+
+    button{
         color: blue;
         font-family: Times;
         border-radius: 20px;
+    }
+
+    #btnA {
         font-size: 20px;
         position:absolute; top:380px; left:2%; width:43%; height:60px; 
     }
     
     #btnB {
-        color: blue;
-        font-family: Times;
-        border-radius: 20px;
         font-size: 20px;
         position:absolute; top:380px; left:45%; width:25%; height:60px; 
     }
 
     #btnC {
-        color: blue;
-        font-family: Times;
-        border-radius: 20px;
         font-size: 10px;
         position:absolute; top:380px; left:70%; width:28%; height:60px; 
     }
