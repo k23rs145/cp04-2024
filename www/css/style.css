@@ -6,6 +6,10 @@
         position:absolute; top:210px; 
         left:10px; right:10px;
     }
+
+    body {
+        background-color:skyblue;
+    }
     
     #secondStr {
         color: #ff0000;
