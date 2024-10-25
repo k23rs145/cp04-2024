@@ -13,6 +13,7 @@
   <style>
 
   </style>
+  
   <script>
     // timer処理
     $(function(){
@@ -37,6 +38,14 @@
 
         $('#btnC').click(function(e) {
             btnCClick(e);
+        });
+
+        $('#btnD').click(function(e) {
+            btnDClick(e);
+        });
+
+        $('#btnE').click(function(e) {
+            btnEClick(e);
         });
         init();
     });
@@ -91,6 +100,7 @@
         ctx.stroke();        
     }    
     // 時計 clock(時, 分, 秒, 残り時間が短い時に不要な針を隠す)
+    
     function clock(hour,minute,second,hide){
         var canvas = $('#mycanvas')[0];
         var ctx = canvas.getContext('2d');
@@ -134,6 +144,7 @@
         var py = getY(cy,ds,0.9);
         line(ctx,cx,cy,px,py,5, 'rgb(128, 100, 255)')
     }
+    
 
     // 残り秒数アナログ表示
     function analog(rest){
@@ -150,8 +161,9 @@
 
 
     // 変数宣言
-    var activ = false;
+    var active = false;
     var startTime = 0;
+    var ex = 0;
     var period = 0;
     var rest = 0;
     var etime = 0;
@@ -163,6 +175,8 @@
         $('#btnA').prop('disabled', false);
         $('#btnB').prop('disabled', false);
         $('#btnC').prop('disabled', false);
+        $('#btnD').prop('disabled', false);
+        $('#btnE').prop('disabled', false);
         
     }
 
@@ -173,9 +187,8 @@
         var img = new Image();
         img.src = "ksuisbg.gif";
         img.onload = function(){
-            ctx.drawImage(img, 0, 0, 300, 300); 
+            ctx.drawImage(img, 0, 0, 300, 300);
         };
-
 
         var audio = new Audio();
         audio.src = "pin.wav";
@@ -201,9 +214,40 @@
     function btnCClick(e){
         alarm();
         active = false;
+        ex = 0;
         period = 60* parseInt($("#minute").val()) + parseInt($("#second").val());
         $("#time").html("経過時間：0");
         $("#remain").html("残り時間：" + period);        
+    }
+
+    function btnDClick(e){
+        ex -= 10; 
+        period = 60* parseInt($("#minute").val()) + parseInt($("#second").val()) + ex;
+        $("#time").html("経過時間：0");
+        $("#remain").html("残り時間：" + period); 
+
+        if(period + ex < 0){
+            rest = 0;
+            period = 0;
+            ex = 0;
+            $("#time").html("経過時間：0");
+            $("#remain").html("残り時間：" + period);
+        }
+    }
+
+    function btnEClick(e){ 
+        ex += 10;   
+        period = 60* parseInt($("#minute").val()) + parseInt($("#second").val()) + ex;
+        $("#time").html("経過時間：0");
+        $("#remain").html("残り時間：" + period); 
+        if(period + ex < 0){
+            rest = 0;
+            period = 0;
+            ex = 0;
+            $("#time").html("経過時間：0");
+            $("#remain").html("残り時間：" + period);
+        }
+        
     }
     
  
@@ -219,10 +263,13 @@
             if(rest <= 0){
                 active = false;
                 alarm();
+                period = 0;
+                rest = 0;
+                ex = 0;
+                $("#time").html("経過時間： " + etime);
+                $("#remain").html("残り時間： " + rest);
             }
         }
-        
-        
     } 
 
   </script>
@@ -237,7 +284,10 @@
     <div id="time">Time</div>
     <button id="btnA">Start</button>  
     <button id="btnB">Stop</button>  
-    <button id="btnC">Set</button>  
+    <button id="btnC">Set</button> 
+    <button id="btnD">-10</button> 
+    <button id="btnE">+10</button>
+
     <input type="number" id="minute" value=0 >
     <input type="number" id="second" value=15 >
 </body>
